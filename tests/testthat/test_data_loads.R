@@ -157,6 +157,7 @@ test_that("SAS Xport (.xpt) files load", {
     imp$fname <- "cars.xpt"
     cat("Line 3\n")
     imp$setfile()
+    Sys.sleep(0.1)
     cat("Line 4\n")
     skip_if(length(imp$prevGp$children) == 1,
         message = "Preview did not load."
