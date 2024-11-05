@@ -1,6 +1,5 @@
 context("Data is loaded into the UI")
 
-skip()
 # setwd('tests/testthat'); devtools::load_all()
 wd <- getwd()
 ui <- iNZGUI$new()
@@ -129,6 +128,8 @@ test_that("CSV files load", {
 })
 
 ## good to here ----
+
+skip()
 
 test_that("SAS (.sas7bdat) files load", {
     imp <- iNZImportWin$new(ui)
