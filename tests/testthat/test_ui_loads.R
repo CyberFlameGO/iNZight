@@ -114,3 +114,5 @@ test_that("Data view is enabled after changing data", {
     expect_true(enabled(ui$dataToolbarWidget$dataBtn))
     expect_false(enabled(ui$dataToolbarWidget$listBtn))
 })
+
+cat("\n fin ...\n")

@@ -132,6 +132,7 @@ test_that("CSV files load", {
 skip()
 
 test_that("SAS (.sas7bdat) files load", {
+    cat("\n - starting test: SAS (.sas7bdat) files load\n")
     imp <- iNZImportWin$new(ui)
     imp$fname <- "test.sas7bdat"
     imp$setfile()
@@ -150,9 +151,11 @@ test_that("SAS (.sas7bdat) files load", {
         dim(ui$getActiveData()),
         c(8, 7)
     )
+    cat("\n - finished test: SAS (.sas7bdat) files load\n")
 })
 
 test_that("SAS Xport (.xpt) files load", {
+    cat("\n - starting test: SAS Xport (.xpt) files load\n")
     imp <- iNZImportWin$new(ui)
     imp$fname <- "cars.xpt"
     imp$setfile()
@@ -171,6 +174,7 @@ test_that("SAS Xport (.xpt) files load", {
         dim(ui$getActiveData()),
         c(26, 5)
     )
+    cat("\n - finished test: SAS Xport (.xpt) files load\n")
 })
 
 # test_that("Switching variable types works (csv)", {
