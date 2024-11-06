@@ -62,11 +62,13 @@ test_that("Data view loads", {
     )
     expect_false(enabled(ui$dataToolbarWidget$dataBtn))
     expect_true(enabled(ui$dataToolbarWidget$listBtn))
+    cat("\n3 - complete ...\n")
 })
 
 test_that("UI closes quietly", {
     cat("\n4 ...\n")
     expect_silent(ui$close())
+    cat("\n4 - complete ...\n")
 })
 
 # load_all(); ui$close(); ui <- iNZGUI$new()
@@ -87,6 +89,7 @@ test_that("Variable list can be searched", {
         ui$dataViewWidget$varWidget$get_items()$Name,
         names(gapminder)[grepl("pop", names(gapminder), ignore.case = TRUE)]
     )
+    cat("\n5 - complete ...\n")
 })
 
 # Switching doesn't work on checks
