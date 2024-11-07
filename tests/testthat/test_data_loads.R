@@ -177,192 +177,192 @@ test_that("SAS Xport (.xpt) files load", {
     cat("\n - finished test: SAS Xport (.xpt) files load\n")
 })
 
-# test_that("Switching variable types works (csv)", {
-#     imp <- iNZImportWin$new(ui)
-#     imp$fname <- "cas5.csv"
-#     imp$setfile()
+test_that("Switching variable types works (csv)", {
+    imp <- iNZImportWin$new(ui)
+    imp$fname <- "cas5.csv"
+    imp$setfile()
 
-#     skip_if(length(imp$prevGp$children) == 1,
-#         message = "Preview did not load."
-#     )
-#     # convert YEAR to cat
-#     expect_equal(
-#         imp$prev$get_names(),
-#         c(
-#             "cellsource (c)", "rightfoot (n)", "travel (c)",
-#             "getlunch (c)", "height (n)", "gender (c)",
-#             "age (n)", "year (n)", "armspan (n)", "cellcost (n)"
-#         )
-#     )
-#     imp$fColTypes[8] <- "categorical"
-#     imp$generatePreview(NULL)
-#     expect_equal(
-#         imp$prev$get_names(),
-#         c(
-#             "cellsource (c)", "rightfoot (n)", "travel (c)",
-#             "getlunch (c)", "height (n)", "gender (c)",
-#             "age (n)", "year (c)", "armspan (n)", "cellcost (n)"
-#         )
-#     )
+    skip_if(length(imp$prevGp$children) == 1,
+        message = "Preview did not load."
+    )
+    # convert YEAR to cat
+    expect_equal(
+        imp$prev$get_names(),
+        c(
+            "cellsource (c)", "rightfoot (n)", "travel (c)",
+            "getlunch (c)", "height (n)", "gender (c)",
+            "age (n)", "year (n)", "armspan (n)", "cellcost (n)"
+        )
+    )
+    imp$fColTypes[8] <- "categorical"
+    imp$generatePreview(NULL)
+    expect_equal(
+        imp$prev$get_names(),
+        c(
+            "cellsource (c)", "rightfoot (n)", "travel (c)",
+            "getlunch (c)", "height (n)", "gender (c)",
+            "age (n)", "year (c)", "armspan (n)", "cellcost (n)"
+        )
+    )
 
-#     imp$ok_button$invoke_change_handler()
-#     expect_is(ui$getActiveData()$year, "factor")
-# })
+    imp$ok_button$invoke_change_handler()
+    expect_is(ui$getActiveData()$year, "factor")
+})
 
-#### somewhere up there??? ^^^
+### somewhere up there??? ^^^
 
-# test_that("Date times are supported (csv)", {
-#     imp <- iNZImportWin$new(ui)
-#     imp$fname <- "dt.csv"
-#     imp$setfile()
-#     skip_if(length(imp$prevGp$children) == 1,
-#         message = "Preview did not load."
-#     )
+test_that("Date times are supported (csv)", {
+    imp <- iNZImportWin$new(ui)
+    imp$fname <- "dt.csv"
+    imp$setfile()
+    skip_if(length(imp$prevGp$children) == 1,
+        message = "Preview did not load."
+    )
 
-#     expect_equal(
-#         imp$prev$get_names(),
-#         c("x (d)", "y (t)", "z (dt)")
-#     )
-#     imp$ok_button$invoke_change_handler()
-#     expect_is(ui$getActiveData()$x, "Date")
-#     expect_is(ui$getActiveData()$y, "hms")
-#     expect_is(ui$getActiveData()$z, "POSIXct")
-# })
+    expect_equal(
+        imp$prev$get_names(),
+        c("x (d)", "y (t)", "z (dt)")
+    )
+    imp$ok_button$invoke_change_handler()
+    expect_is(ui$getActiveData()$x, "Date")
+    expect_is(ui$getActiveData()$y, "hms")
+    expect_is(ui$getActiveData()$z, "POSIXct")
+})
 
-# test_that("Changing file resets column types", {
-#     imp <- iNZImportWin$new(ui)
-#     imp$fname <- "dt.csv"
-#     imp$fColTypes <- c("numeric", "numeric", "auto")
-#     expect_silent(imp$setfile())
-#     expect_true(all(imp$fColTypes == "auto"))
-# })
+test_that("Changing file resets column types", {
+    imp <- iNZImportWin$new(ui)
+    imp$fname <- "dt.csv"
+    imp$fColTypes <- c("numeric", "numeric", "auto")
+    expect_silent(imp$setfile())
+    expect_true(all(imp$fColTypes == "auto"))
+})
 
-# test_that("RData files display list of objects", {
-#     save(census.at.school.500, iris, file = "test.rda")
-#     on.exit(unlink("test.rda"))
-#     imp <- iNZImportWin$new(ui)
-#     imp$fname <- "test.rda"
-#     expect_silent(imp$setfile())
-#     expect_equal(svalue(imp$rdaName), "iris")
-#     expect_equal(imp$rdaName$get_items(), c("iris", "census.at.school.500"))
-#     expect_silent(svalue(imp$rdaName, index = TRUE) <- 2)
-#     imp$ok_button$invoke_change_handler()
-# })
-
-
-
-# # try(ui$close());
-# # ui <- iNZGUI$new()
-# # ui$initializeGui()
-
-# test_that("Excel files load and display available sheets", {
-#     imp <- iNZImportWin$new(ui)
-#     imp$fname <- "sheet.xlsx"
-#     expect_silent(imp$setfile())
-#     expect_equal(imp$rdaName$get_items(), c("Africa", "Americas", "Asia", "Europe", "Oceania"))
-#     expect_equal(svalue(imp$rdaName), "Africa")
-#     expect_silent(svalue(imp$rdaName, index = TRUE) <- 3)
-#     expect_silent(imp$ok_button$invoke_change_handler())
-#     expect_true(all(as.character(ui$getActiveData()$continent) == "Asia"))
-# })
+test_that("RData files display list of objects", {
+    save(census.at.school.500, iris, file = "test.rda")
+    on.exit(unlink("test.rda"))
+    imp <- iNZImportWin$new(ui)
+    imp$fname <- "test.rda"
+    expect_silent(imp$setfile())
+    expect_equal(svalue(imp$rdaName), "iris")
+    expect_equal(imp$rdaName$get_items(), c("iris", "census.at.school.500"))
+    expect_silent(svalue(imp$rdaName, index = TRUE) <- 2)
+    imp$ok_button$invoke_change_handler()
+})
 
 
-# # try(ui$close()); load_all()
-# # ui <- iNZGUI$new()
-# # ui$initializeGui()
 
-# test_that("User can choose to load a URL", {
-#     imp <- iNZImportWin$new(ui)
-#     svalue(imp$loadURL) <- TRUE
-#     svalue(imp$fileurl) <- "https://raw.githubusercontent.com/iNZightVIT/iNZight/dev/tests/testthat/cas5.csv"
-#     expect_equal(imp$fext, "csv")
-#     expect_silent(imp$ok_button$invoke_change_handler())
-#     expect_equivalent(
-#         ui$getActiveData(),
-#         iNZightTools::smart_read("cas5.csv")
-#     )
-# })
+# try(ui$close());
+# ui <- iNZGUI$new()
+# ui$initializeGui()
+
+test_that("Excel files load and display available sheets", {
+    imp <- iNZImportWin$new(ui)
+    imp$fname <- "sheet.xlsx"
+    expect_silent(imp$setfile())
+    expect_equal(imp$rdaName$get_items(), c("Africa", "Americas", "Asia", "Europe", "Oceania"))
+    expect_equal(svalue(imp$rdaName), "Africa")
+    expect_silent(svalue(imp$rdaName, index = TRUE) <- 3)
+    expect_silent(imp$ok_button$invoke_change_handler())
+    expect_true(all(as.character(ui$getActiveData()$continent) == "Asia"))
+})
 
 
-# ## Many columns file:
-# many_cols <- data.frame(X1 = 1:20)
-# for (i in 2:30) {
-#     many_cols[[sprintf("X%i", i)]] <- sample(50, 20)
-# }
-# for (i in 31:40) {
-#     many_cols[[sprintf("X%i", i)]] <- sample(LETTERS[1:5], 20, TRUE)
-# }
-# for (i in 41:50) {
-#     many_cols[[sprintf("X%i", i)]] <- sample(LETTERS, 20)
-# }
+# try(ui$close()); load_all()
+# ui <- iNZGUI$new()
+# ui$initializeGui()
 
-# tf <- tempfile(fileext = ".csv")
-# on.exit(unlink(tf), add = TRUE)
-# write.csv(many_cols, tf, quote = FALSE, row.names = FALSE)
+test_that("User can choose to load a URL", {
+    imp <- iNZImportWin$new(ui)
+    svalue(imp$loadURL) <- TRUE
+    svalue(imp$fileurl) <- "https://raw.githubusercontent.com/iNZightVIT/iNZight/dev/tests/testthat/cas5.csv"
+    expect_equal(imp$fext, "csv")
+    expect_silent(imp$ok_button$invoke_change_handler())
+    expect_equivalent(
+        ui$getActiveData(),
+        iNZightTools::smart_read("cas5.csv")
+    )
+})
 
-# imp <- iNZImportWin$new(ui)
-# test_that("Data sets with many columns display only var names", {
-#     imp$fname <- tf
-#     expect_silent(imp$setfile())
-#     expect_equal(dim(imp$prev), c(rows = 50L, cols = 3L))
-#     expect_false(imp$prev$is_editable(1L))
-#     expect_true(imp$prev$is_editable(2L))
-#     expect_false(imp$prev$is_editable(3L))
-# })
 
-# test_that("Data sets with many columns can change var types", {
-#     imp$fColTypes[1] <- "categorical"
-#     imp$generatePreview(NULL, reload = TRUE)
-#     expect_match(
-#         as.character(imp$prev$get_frame()$Values[1]),
-#         "^Categories: ",
-#         all = FALSE
-#     )
+## Many columns file:
+many_cols <- data.frame(X1 = 1:20)
+for (i in 2:30) {
+    many_cols[[sprintf("X%i", i)]] <- sample(50, 20)
+}
+for (i in 31:40) {
+    many_cols[[sprintf("X%i", i)]] <- sample(LETTERS[1:5], 20, TRUE)
+}
+for (i in 41:50) {
+    many_cols[[sprintf("X%i", i)]] <- sample(LETTERS, 20)
+}
 
-#     imp$fColTypes[1] <- "auto"
-#     imp$generatePreview(NULL, reload = TRUE)
-#     expect_match(
-#         as.character(imp$prev$get_frame()$Values[1]),
-#         paste(1:5, collapse = " "),
-#         all = FALSE
-#     )
-# })
-# imp$cancel_button$invoke_change_handler()
+tf <- tempfile(fileext = ".csv")
+on.exit(unlink(tf), add = TRUE)
+write.csv(many_cols, tf, quote = FALSE, row.names = FALSE)
 
-# test_that("JSON files load", {
-#     t <- tempfile(fileext = ".json")
-#     jsonlite::write_json(iris, t)
-#     imp <- iNZImportWin$new(ui)
-#     on.exit(try(gWidgets2::dispose(imp$importFileWin), TRUE))
+imp <- iNZImportWin$new(ui)
+test_that("Data sets with many columns display only var names", {
+    imp$fname <- tf
+    expect_silent(imp$setfile())
+    expect_equal(dim(imp$prev), c(rows = 50L, cols = 3L))
+    expect_false(imp$prev$is_editable(1L))
+    expect_true(imp$prev$is_editable(2L))
+    expect_false(imp$prev$is_editable(3L))
+})
 
-#     imp$fname <- t
-#     imp$setfile()
-#     expect_equal(imp$fext, "json")
-#     expect_equal(dim(imp$prev), c(rows = 5L, cols = 5L))
-#     expect_silent(imp$ok_button$invoke_change_handler())
-#     expect_equivalent(ui$getActiveData(), iris)
-#     # expect_match(
-#     #     # this has path names issues
-#     #     ui$rhistory$get(),
-#     #     "jsonlite::fromJSON(",
-#     #     fixed = TRUE,
-#     #     all = FALSE
-#     # )
-# })
-# try(ui$close(), silent = TRUE)
+test_that("Data sets with many columns can change var types", {
+    imp$fColTypes[1] <- "categorical"
+    imp$generatePreview(NULL, reload = TRUE)
+    expect_match(
+        as.character(imp$prev$get_frame()$Values[1]),
+        "^Categories: ",
+        all = FALSE
+    )
 
-# test_that("All documents can be deleted, returning to landing screen", {
-#     # devtools::load_all(); try(ui$close(), TRUE)
-#     ui <- iNZGUI$new()
-#     on.exit(ui$close())
-#     ui$initializeGui()
+    imp$fColTypes[1] <- "auto"
+    imp$generatePreview(NULL, reload = TRUE)
+    expect_match(
+        as.character(imp$prev$get_frame()$Values[1]),
+        paste(1:5, collapse = " "),
+        all = FALSE
+    )
+})
+imp$cancel_button$invoke_change_handler()
 
-#     ui$setDocument(iNZDocument$new(data = iris))
-#     expect_equal(length(ui$iNZDocuments), 1L)
+test_that("JSON files load", {
+    t <- tempfile(fileext = ".json")
+    jsonlite::write_json(iris, t)
+    imp <- iNZImportWin$new(ui)
+    on.exit(try(gWidgets2::dispose(imp$importFileWin), TRUE))
 
-#     expect_silent(
-#         ui$do_delete_dataset()
-#     )
-#     expect_equal(length(ui$iNZDocuments), 1L)
-#     expect_equal(ui$dataViewWidget$current, "landing")
-# })
+    imp$fname <- t
+    imp$setfile()
+    expect_equal(imp$fext, "json")
+    expect_equal(dim(imp$prev), c(rows = 5L, cols = 5L))
+    expect_silent(imp$ok_button$invoke_change_handler())
+    expect_equivalent(ui$getActiveData(), iris)
+    # expect_match(
+    #     # this has path names issues
+    #     ui$rhistory$get(),
+    #     "jsonlite::fromJSON(",
+    #     fixed = TRUE,
+    #     all = FALSE
+    # )
+})
+try(ui$close(), silent = TRUE)
+
+test_that("All documents can be deleted, returning to landing screen", {
+    # devtools::load_all(); try(ui$close(), TRUE)
+    ui <- iNZGUI$new()
+    on.exit(ui$close())
+    ui$initializeGui()
+
+    ui$setDocument(iNZDocument$new(data = iris))
+    expect_equal(length(ui$iNZDocuments), 1L)
+
+    expect_silent(
+        ui$do_delete_dataset()
+    )
+    expect_equal(length(ui$iNZDocuments), 1L)
+    expect_equal(ui$dataViewWidget$current, "landing")
+})
