@@ -216,6 +216,7 @@ test_that("Date times are supported (csv)", {
     imp <- iNZImportWin$new(ui)
     imp$fname <- "dt.csv"
     imp$setfile()
+    cat("\n --- 1.")
     skip_if(length(imp$prevGp$children) == 1,
         message = "Preview did not load."
     )
@@ -224,7 +225,9 @@ test_that("Date times are supported (csv)", {
         imp$prev$get_names(),
         c("x (d)", "y (t)", "z (dt)")
     )
+    cat("\n --- 2. pressing button ...")
     imp$ok_button$invoke_change_handler()
+    cat("\n --- 3. done")
     expect_is(ui$getActiveData()$x, "Date")
     expect_is(ui$getActiveData()$y, "hms")
     expect_is(ui$getActiveData()$z, "POSIXct")
