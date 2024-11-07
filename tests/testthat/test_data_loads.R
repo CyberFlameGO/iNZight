@@ -129,8 +129,6 @@ test_that("CSV files load", {
 
 ## good to here ----
 
-skip()
-
 test_that("SAS (.sas7bdat) files load", {
     cat("\n - starting test: SAS (.sas7bdat) files load\n")
     imp <- iNZImportWin$new(ui)
