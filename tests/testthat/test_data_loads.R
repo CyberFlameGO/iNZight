@@ -214,8 +214,10 @@ test_that("Switching variable types works (csv)", {
 test_that("Date times are supported (csv)", {
     cat("\n - starting test: Date times are supported (csv)\n")
     imp <- iNZImportWin$new(ui)
+    Sys.sleep(0.5)
     imp$fname <- "dt.csv"
     imp$setfile()
+    Sys.sleep(0.5)
     cat("\n --- 1.")
     skip_if(length(imp$prevGp$children) == 1,
         message = "Preview did not load."
@@ -237,9 +239,11 @@ test_that("Date times are supported (csv)", {
 test_that("Changing file resets column types", {
     cat("\n - starting test: Changing file resets column types\n")
     imp <- iNZImportWin$new(ui)
+    Sys.sleep(0.5)
     imp$fname <- "dt.csv"
     imp$fColTypes <- c("numeric", "numeric", "auto")
     expect_silent(imp$setfile())
+    Sys.sleep(0.5)
     expect_true(all(imp$fColTypes == "auto"))
     cat("\n - finished test: Changing file resets column types\n")
 })
