@@ -176,6 +176,7 @@ test_that("SAS Xport (.xpt) files load", {
 })
 
 test_that("Switching variable types works (csv)", {
+    cat("\n - starting test: Switching variable types works (csv)\n")
     imp <- iNZImportWin$new(ui)
     imp$fname <- "cas5.csv"
     imp$setfile()
@@ -205,11 +206,13 @@ test_that("Switching variable types works (csv)", {
 
     imp$ok_button$invoke_change_handler()
     expect_is(ui$getActiveData()$year, "factor")
+    cat("\n - finished test: Switching variable types works (csv)\n")
 })
 
 ### somewhere up there??? ^^^
 
 test_that("Date times are supported (csv)", {
+    cat("\n - starting test: Date times are supported (csv)\n")
     imp <- iNZImportWin$new(ui)
     imp$fname <- "dt.csv"
     imp$setfile()
@@ -225,17 +228,21 @@ test_that("Date times are supported (csv)", {
     expect_is(ui$getActiveData()$x, "Date")
     expect_is(ui$getActiveData()$y, "hms")
     expect_is(ui$getActiveData()$z, "POSIXct")
+    cat("\n - finished test: Date times are supported (csv)\n")
 })
 
 test_that("Changing file resets column types", {
+    cat("\n - starting test: Changing file resets column types\n")
     imp <- iNZImportWin$new(ui)
     imp$fname <- "dt.csv"
     imp$fColTypes <- c("numeric", "numeric", "auto")
     expect_silent(imp$setfile())
     expect_true(all(imp$fColTypes == "auto"))
+    cat("\n - finished test: Changing file resets column types\n")
 })
 
 test_that("RData files display list of objects", {
+    cat("\n - starting test: RData files display list of objects\n")
     save(census.at.school.500, iris, file = "test.rda")
     on.exit(unlink("test.rda"))
     imp <- iNZImportWin$new(ui)
@@ -245,6 +252,7 @@ test_that("RData files display list of objects", {
     expect_equal(imp$rdaName$get_items(), c("iris", "census.at.school.500"))
     expect_silent(svalue(imp$rdaName, index = TRUE) <- 2)
     imp$ok_button$invoke_change_handler()
+    expect_equivalent(ui$getActiveData(), census.at.school.500)
 })
 
 
@@ -254,6 +262,7 @@ test_that("RData files display list of objects", {
 # ui$initializeGui()
 
 test_that("Excel files load and display available sheets", {
+    cat("\n - starting test: Excel files load and display available sheets\n")
     imp <- iNZImportWin$new(ui)
     imp$fname <- "sheet.xlsx"
     expect_silent(imp$setfile())
@@ -262,6 +271,7 @@ test_that("Excel files load and display available sheets", {
     expect_silent(svalue(imp$rdaName, index = TRUE) <- 3)
     expect_silent(imp$ok_button$invoke_change_handler())
     expect_true(all(as.character(ui$getActiveData()$continent) == "Asia"))
+    cat("\n - finished test: Excel files load and display available sheets\n")
 })
 
 
@@ -270,6 +280,7 @@ test_that("Excel files load and display available sheets", {
 # ui$initializeGui()
 
 test_that("User can choose to load a URL", {
+    cat("\n - starting test: User can choose to load a URL\n")
     imp <- iNZImportWin$new(ui)
     svalue(imp$loadURL) <- TRUE
     svalue(imp$fileurl) <- "https://raw.githubusercontent.com/iNZightVIT/iNZight/dev/tests/testthat/cas5.csv"
@@ -279,6 +290,7 @@ test_that("User can choose to load a URL", {
         ui$getActiveData(),
         iNZightTools::smart_read("cas5.csv")
     )
+    cat("\n - finished test: User can choose to load a URL\n")
 })
 
 
@@ -300,15 +312,18 @@ write.csv(many_cols, tf, quote = FALSE, row.names = FALSE)
 
 imp <- iNZImportWin$new(ui)
 test_that("Data sets with many columns display only var names", {
+    cat("\n - starting test: Data sets with many columns display only var names\n")
     imp$fname <- tf
     expect_silent(imp$setfile())
     expect_equal(dim(imp$prev), c(rows = 50L, cols = 3L))
     expect_false(imp$prev$is_editable(1L))
     expect_true(imp$prev$is_editable(2L))
     expect_false(imp$prev$is_editable(3L))
+    cat("\n - finished test: Data sets with many columns display only var names\n")
 })
 
 test_that("Data sets with many columns can change var types", {
+    cat("\n - starting test: Data sets with many columns can change var types\n")
     imp$fColTypes[1] <- "categorical"
     imp$generatePreview(NULL, reload = TRUE)
     expect_match(
@@ -324,10 +339,12 @@ test_that("Data sets with many columns can change var types", {
         paste(1:5, collapse = " "),
         all = FALSE
     )
+    cat("\n - finished test: Data sets with many columns can change var types\n")
 })
 imp$cancel_button$invoke_change_handler()
 
 test_that("JSON files load", {
+    cat("\n - starting test: JSON files load\n")
     t <- tempfile(fileext = ".json")
     jsonlite::write_json(iris, t)
     imp <- iNZImportWin$new(ui)
@@ -346,10 +363,12 @@ test_that("JSON files load", {
     #     fixed = TRUE,
     #     all = FALSE
     # )
+    cat("\n - finished test: JSON files load\n")
 })
 try(ui$close(), silent = TRUE)
 
 test_that("All documents can be deleted, returning to landing screen", {
+    cat("\n - starting test: All documents can be deleted, returning to landing screen\n")
     # devtools::load_all(); try(ui$close(), TRUE)
     ui <- iNZGUI$new()
     on.exit(ui$close())
@@ -363,4 +382,5 @@ test_that("All documents can be deleted, returning to landing screen", {
     )
     expect_equal(length(ui$iNZDocuments), 1L)
     expect_equal(ui$dataViewWidget$current, "landing")
+    cat("\n - finished test: All documents can be deleted, returning to landing screen\n")
 })
